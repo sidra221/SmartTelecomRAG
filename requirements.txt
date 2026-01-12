@@ -1,0 +1,7 @@
+llama-index-vector-stores-qdrant
+llama-index-readers-file
+llama-index-embeddings-fastembed
+llama-index-llms-openrouter
+qdrant-client
+fastembed
+gradio
