@@ -51,18 +51,15 @@ pip install -r requirements.txt
    - Add any other `.txt` files you want to include
 
 2. **Set your OpenRouter API key**:
-   - Option 1: Set environment variable:
+   - Copy the example environment file:
      ```bash
-     export OPENROUTER_API_KEY="your-api-key-here"
+     cp .env.example .env
      ```
-   - Option 2: Edit `rag.py` and add your API key:
-     ```python
-     llm = OpenRouter(
-         api_key="your-api-key-here",
-         model="mistralai/mistral-7b-instruct",
-         ...
-     )
+   - Edit `.env` and add your OpenRouter API key:
+     ```bash
+     OPENROUTER_API_KEY=your-api-key-here
      ```
+   - Get your free API key at: https://openrouter.ai
 
 ## 🎯 Usage
 
@@ -90,6 +87,7 @@ newrag/
 ├── rag.py              # Main application file
 ├── requirements.txt    # Python dependencies
 ├── .gitignore         # Git ignore file
+├── .env.example       # Example environment file
 ├── README.md          # This file
 └── data/              # Document folder
     ├── faq.txt
