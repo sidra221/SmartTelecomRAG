@@ -5,3 +5,4 @@ llama-index-llms-openrouter
 qdrant-client
 fastembed
 gradio
+python-dotenv

@@ -1,6 +1,10 @@
 import os
 import qdrant_client
 import gradio as gr
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from llama_index.core import (
     VectorStoreIndex,
@@ -55,7 +59,19 @@ index = VectorStoreIndex.from_documents(
 # =========================
 # 4. LLM (OpenRouter – Free Model)
 # =========================
+# Get API key from environment variable
+api_key = os.getenv("OPENROUTER_API_KEY")
+if not api_key:
+    print("⚠️  ERROR: OPENROUTER_API_KEY not found!")
+    print("Please create a .env file with your API key:")
+    print("  OPENROUTER_API_KEY=your-api-key-here")
+    print("\nOr set it as an environment variable:")
+    print("  export OPENROUTER_API_KEY='your-api-key-here'")
+    print("\nYou can get a free API key at: https://openrouter.ai")
+    raise ValueError("OPENROUTER_API_KEY is required. Please set it in .env file or as environment variable.")
+
 llm = OpenRouter(
+    api_key=api_key,
     model="mistralai/mistral-7b-instruct",
     max_tokens=256,
     context_window=4096,
@@ -105,9 +121,9 @@ def chat_with_ai(user_input, history):
 
     # Confidence indicator (project feature)
     if answer == "I do not have this information in my data.":
-        answer += "\n\n🔒 Source: Not found in documents"
+        answer += "\n\n Source: Not found in documents"
     else:
-        answer += "\n\n✅ Source: Internal telecom documents"
+        answer += "\n\n Source: Internal telecom documents"
 
     # Use dictionary format for Gradio Chatbot (messages format)
     history.append({"role": "user", "content": user_input})
@@ -121,7 +137,7 @@ def chat_with_ai(user_input, history):
 # =========================
 def build_ui():
     with gr.Blocks() as demo:
-        gr.Markdown("# 📡 Smart Telecom RAG Chatbot")
+        gr.Markdown("# Smart Telecom RAG Chatbot")
 
         chatbot = gr.Chatbot(
             label="Telecom Assistant"
